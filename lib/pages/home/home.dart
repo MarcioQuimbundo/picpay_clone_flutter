@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:picpay_clone_flutter/pages/home/home_bloc.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -7,13 +8,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  
+  MyHomePageBloc bloc = MyHomePageBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +35,21 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
+            StreamBuilder(
+              stream: bloc.output,
+              initialData: 0,
+              builder: (context, snapshot) {
+                return Text(
+                  '${snapshot.data}',
+                  style: Theme.of(context).textTheme.display1,
+                );
+              }
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: bloc.incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
