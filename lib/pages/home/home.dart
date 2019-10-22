@@ -83,13 +83,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     pinned: true,
                     delegate: Tabs(50.0),
                   ),
-                  SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return Text("Itens");
-                      },
-                    ),
-                  ),
+                  SliverFillRemaining(
+                    child: _tabView(),
+                  )
                 ],
               ),
             ),
@@ -110,6 +106,7 @@ class Tabs extends SliverPersistentHeaderDelegate {
     return Container(
       color: Theme.of(context).backgroundColor,
       height: size,
+      padding: EdgeInsets.all(10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -118,6 +115,8 @@ class Tabs extends SliverPersistentHeaderDelegate {
             isScrollable: true,
             labelColor: Theme.of(context).primaryColor,
             indicatorColor: Theme.of(context).primaryColor,
+            indicatorPadding: EdgeInsets.all(0),
+            indicatorSize: TabBarIndicatorSize.label,
             tabs: <Widget>[
               Tab(
                 text: "Todas",
@@ -142,4 +141,64 @@ class Tabs extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(Tabs oldDelegate) {
     return oldDelegate.size != size;
   }
+}
+
+Widget _tabView() {
+  return TabBarView(
+    children: <Widget>[
+      Container(
+        child: _listActivities(),
+      ),
+      Container(
+        child: _listActivities(),
+      ),
+    ],
+  );
+}
+
+List activities = [
+  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
+  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
+  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
+  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
+  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
+  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
+  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
+  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" }
+];
+
+Widget _listActivities(){
+  return ListView.builder(
+    itemBuilder: (context, position){
+      return _cardItem(activities[position]);
+    },
+    itemCount: activities.length,
+  );
+}
+
+Widget _cardItem(activity){
+  return Card(
+    child: Container(
+      child: Row(
+        children: <Widget>[
+          Image.network(""),
+          RichText(
+            text: TextSpan(
+                text: activity["remetente"],
+                style: TextStyle(
+                    color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                children: <TextSpan>[
+                  TextSpan(text: activity["typeTransaction"],
+                    style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.normal),
+                  ),
+                  TextSpan(text: activity["destinatario"],
+                    style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                  )
+                ]
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
