@@ -11,48 +11,140 @@ class _MyHomePageState extends State<MyHomePage> {
   
   MyHomePageBloc bloc = MyHomePageBloc();
 
+  static double avatarMaximumRadius = 40.0;
+  static double avatarMinimumRadius = 15.0;
+  double avatarRadius = avatarMaximumRadius;
+  double translate = -avatarMaximumRadius;
+  bool isExpanded = true;
+  double offset = 0.0;
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.account_balance_wallet),
-          onPressed: ()=>print("tap leading"),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.grey,
+        body: DefaultTabController(
+            length: 2,
+            child: CustomScrollView(
+              physics: ClampingScrollPhysics(),
+              slivers: <Widget>[
+                SliverAppBar(
+                  expandedHeight: 40.0,
+                  backgroundColor: Colors.grey[200],
+                  leading: IconButton(
+                    color: Theme.of(context).accentColor,
+                    icon: Icon(Icons.queue),
+                    onPressed: ()=>print("qrbutton"),
+                  ),
+                  actions: <Widget>[
+                    IconButton(
+                      color: Theme.of(context).accentColor,
+                      icon: Icon(Icons.person_add),
+                      onPressed: ()=>print("add person button"),
+                    )
+                  ],
+                  pinned: false,
+                  elevation: 0.0,
+                  forceElevated: true,
+                  floating: false,
+                  flexibleSpace: Container(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 40.0,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "Meu saldo",
+                              style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 10.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "R\$ 35,02",
+                              style: TextStyle(
+                                color: Colors.grey[800],
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    height: 100.0,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor
+                    ),
+                    child: Text("fsdfs"),
+                  )
+                ),
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: Tabs(50.0),
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return Text("Itens");
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-        title: Text("Incluir saldo"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.person_add),
-            onPressed: ()=>print("tap right button"),
-          )
+    );
+  }
+}
+
+class Tabs extends SliverPersistentHeaderDelegate {
+  final double size;
+
+  Tabs(this.size);
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Theme.of(context).primaryColor,
+      height: size,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text("Atividades"),
+          TabBar(
+            isScrollable: true,
+            labelColor: Theme.of(context).accentColor,
+            tabs: <Widget>[
+              Tab(
+                text: "Todas",
+              ),
+              Tab(
+                text: "Minhas",
+              ),
+            ],
+          ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            StreamBuilder(
-              stream: bloc.output,
-              initialData: 0,
-              builder: (context, snapshot) {
-                return Text(
-                  '${snapshot.data}',
-                  style: Theme.of(context).textTheme.display1,
-                );
-              }
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: bloc.incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
     );
+  }
+
+  @override
+  double get maxExtent => size;
+
+  @override
+  double get minExtent => size;
+
+  @override
+  bool shouldRebuild(Tabs oldDelegate) {
+    return oldDelegate.size != size;
   }
 }

@@ -1,15 +1,11 @@
 import 'dart:async';
 
 class MyHomePageBloc {
-  int counter = 0;
+  double saldo = 50.00;
 
   final StreamController _streamController = StreamController();
 
   Sink get input => _streamController.sink;
   Stream get output => _streamController.stream;
 
-  void incrementCounter() {
-    counter++;
-    input.add(counter);
-  }
 }

@@ -12,7 +12,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.grey[200],
         accentColor: Color(0xff11C76F),
-        cardColor: Colors.white
+        cardColor: Colors.white,
+        iconTheme: IconThemeData(
+          color: Theme.of(context).accentColor,
+        )
       ),
       home: MyHomePage(),
     );
