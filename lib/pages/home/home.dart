@@ -84,7 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     delegate: Tabs(50.0),
                   ),
                   SliverFillRemaining(
-                    child: _tabView(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _tabView(),
+                    ),
                   )
                 ],
               ),
@@ -110,7 +113,13 @@ class Tabs extends SliverPersistentHeaderDelegate {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text("Atividades"),
+          Text(
+            "Atividades",
+            style: TextStyle(
+              color: Colors.black87,
+              fontWeight: FontWeight.bold
+            ),
+          ),
           TabBar(
             isScrollable: true,
             labelColor: Theme.of(context).primaryColor,
@@ -157,45 +166,94 @@ Widget _tabView() {
 }
 
 List activities = [
-  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
-  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
-  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
-  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
-  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
-  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
-  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
-  {"foto": "", "remetente": "User 1", "destinatario": "User 2", "timestamp": "", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" }
+  {"foto": "alfredo", "remetente": "@alfredorose", "destinatario": "@jackbyrd", "timestamp": "2 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
+  {"foto": "diane", "remetente": "@dianekuhn", "destinatario": "@alfredorose", "timestamp": "3 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
 ];
 
 Widget _listActivities(){
   return ListView.builder(
     itemBuilder: (context, position){
-      return _cardItem(activities[position]);
+      return _cardItem(activities[position], context);
     },
     itemCount: activities.length,
   );
 }
 
-Widget _cardItem(activity){
+Widget _cardItem(activity, context){
   return Card(
     child: Container(
-      child: Row(
+      padding: EdgeInsets.all(15),
+      child: Column(
         children: <Widget>[
-          Image.network(""),
-          RichText(
-            text: TextSpan(
-                text: activity["remetente"],
-                style: TextStyle(
-                    color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-                children: <TextSpan>[
-                  TextSpan(text: activity["typeTransaction"],
-                    style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.normal),
-                  ),
-                  TextSpan(text: activity["destinatario"],
-                    style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-                  )
-                ]
-            ),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: ClipRRect(
+                  child: Image.asset("assets/${activity["foto"]}.jpg", height: 60.0,),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+              ),
+              RichText(
+                text: TextSpan(
+                    text: "${activity["remetente"]} ",
+                    style: TextStyle(
+                        color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                    children: <TextSpan>[
+                      TextSpan(text: "${activity["typeTransaction"]} ",
+                        style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.normal),
+                      ),
+                      TextSpan(text:"${activity["destinatario"]} ",
+                        style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+                      )
+                    ]
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.people_outline, color: Colors.grey,),
+                    Text(
+                      " ${activity["timestamp"]} ",
+                      style: TextStyle(
+                        color: Colors.grey
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.chat, color: Colors.grey,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 3, right: 8),
+                      child: Text(
+                        activity["comentarios"].toString(),
+                        style: TextStyle(
+                          color: Colors.grey
+                        ),
+                      ),
+                    ),
+                    Icon(Icons.favorite_border, color: Colors.grey,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 3, right: 8),
+                      child: Text(
+                        activity["likes"].toString(),
+                        style: TextStyle(
+                          color: Colors.grey
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
           ),
         ],
       ),
