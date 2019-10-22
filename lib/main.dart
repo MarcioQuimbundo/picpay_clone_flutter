@@ -10,11 +10,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Colors.grey[200],
-        accentColor: Color(0xff11C76F),
+        backgroundColor: Colors.grey[200],
+        dialogBackgroundColor: Colors.grey[200],
+        scaffoldBackgroundColor: Colors.grey[200],
+        primaryColor: Color(0xff11C76F),
         cardColor: Colors.white,
         iconTheme: IconThemeData(
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).primaryColor,
         )
       ),
       home: MyHomePage(),
