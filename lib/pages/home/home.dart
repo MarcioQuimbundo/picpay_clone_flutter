@@ -1,7 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:picpay_clone_flutter/pages/home/home_bloc.dart';
-
+import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -225,8 +226,15 @@ Widget _cardItem(activity, context){
                   borderRadius: BorderRadius.circular(100),
                 ),
               ),
-              RichText(
-                text: TextSpan(
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: 100.0,
+                  maxWidth: 250.0,
+                  minHeight: 30.0,
+                  maxHeight: 100.0,
+                ),
+                child: AutoSizeText.rich(
+                  TextSpan(
                     text: "${activity["remetente"]} ",
                     style: TextStyle(
                         color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
@@ -238,8 +246,11 @@ Widget _cardItem(activity, context){
                         style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
                       )
                     ]
+                  ),
+                  maxLines: 2,
+                  wrapWords: true,
                 ),
-              ),
+              )
             ],
           ),
           Row(
