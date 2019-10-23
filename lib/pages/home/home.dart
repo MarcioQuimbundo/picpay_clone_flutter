@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:picpay_clone_flutter/pages/home/home_bloc.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -72,11 +73,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   SliverToBoxAdapter(
                     child: Container(
-                      height: 100.0,
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor
                       ),
-                      child: Text("fsdfs"),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Sugestões para você",
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            height: 120.0,
+                            padding: EdgeInsets.only(bottom: 8),
+                            child: _listUsers(),
+                          ),
+                        ],
+                      ),
                     )
                   ),
                   SliverPersistentHeader(
@@ -257,6 +282,61 @@ Widget _cardItem(activity, context){
           ),
         ],
       ),
+    ),
+  );
+}
+
+List users = [
+  {"foto": "alfredo", "user": "Cartão de transporte"},
+  {"foto": "diane", "user": "Máquinas Cielo"},
+  {"foto": "alfredo", "user": "@alfredorose"},
+  {"foto": "diane", "user": "@dianekuhn"},
+  {"foto": "alfredo", "user": "Cartão de transporte"},
+  {"foto": "diane", "user": "Máquinas Cielo"},
+  {"foto": "alfredo", "user": "@alfredorose"},
+  {"foto": "diane", "user": "@dianekuhn"},
+];
+
+
+Widget _listUsers(){
+  return ListView.builder(
+    scrollDirection: Axis.horizontal,
+    itemBuilder: (context, position){
+      return _userItem(users[position]);
+    },
+    itemCount: users.length,
+  );
+}
+
+Widget _userItem(user){
+  return Container(
+    width: 90.0,
+    child: Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: ClipRRect(
+            child: Container(
+              padding: EdgeInsets.all(2),
+              color: Colors.white,
+              child: ClipRRect(
+                child: Image.asset("assets/${user["foto"]}.jpg", height: 60.0,),
+                borderRadius: BorderRadius.circular(100),
+              )
+            ),
+            borderRadius: BorderRadius.circular(100),
+          ),
+        ),
+        Text(
+          user["user"],
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.w500
+          ),
+          maxLines: 2,
+        )
+      ],
     ),
   );
 }
