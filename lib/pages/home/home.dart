@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:picpay_clone_flutter/pages/home/home_bloc.dart';
 
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
   @override
@@ -25,17 +26,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 slivers: <Widget>[
                   SliverAppBar(
                     expandedHeight: 40.0,
-                    backgroundColor: Colors.grey[200],
-                    leading: IconButton(
-                      color: Theme.of(context).primaryColor,
-                      icon: Icon(Icons.queue),
-                      onPressed: ()=>print("qrbutton"),
+                    backgroundColor: Theme.of(context).backgroundColor,
+                    leading: Padding(
+                      padding: const EdgeInsets.all(13.0),
+                      child: Image.asset("assets/icon-qrcode.png"),
                     ),
                     actions: <Widget>[
-                      IconButton(
-                        color: Theme.of(context).primaryColor,
-                        icon: Icon(Icons.person_add),
-                        onPressed: ()=>print("add person button"),
+                      Padding(
+                        padding: const EdgeInsets.all(13.0),
+                        child: Image.asset("assets/add-icon.png"),
                       )
                     ],
                     pinned: false,
@@ -53,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 "Meu saldo",
                                 style: TextStyle(
                                   color: Colors.grey[800],
-                                  fontSize: 10.0,
+                                  fontSize: 12.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -61,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 "R\$ 35,02",
                                 style: TextStyle(
                                   color: Colors.grey[800],
-                                  fontSize: 18.0,
+                                  fontSize: 20.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                               )
@@ -193,6 +192,12 @@ Widget _tabView() {
 List activities = [
   {"foto": "alfredo", "remetente": "@alfredorose", "destinatario": "@jackbyrd", "timestamp": "2 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
   {"foto": "diane", "remetente": "@dianekuhn", "destinatario": "@alfredorose", "timestamp": "3 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
+  {"foto": "alfredo", "remetente": "@alfredorose", "destinatario": "@jackbyrd", "timestamp": "2 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
+  {"foto": "diane", "remetente": "@dianekuhn", "destinatario": "@alfredorose", "timestamp": "3 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
+  {"foto": "alfredo", "remetente": "@alfredorose", "destinatario": "@jackbyrd", "timestamp": "2 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
+  {"foto": "diane", "remetente": "@dianekuhn", "destinatario": "@alfredorose", "timestamp": "3 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
+  {"foto": "alfredo", "remetente": "@alfredorose", "destinatario": "@jackbyrd", "timestamp": "2 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": true, "value": "R\$ 50,00" },
+  {"foto": "diane", "remetente": "@dianekuhn", "destinatario": "@alfredorose", "timestamp": "3 dias atrás", "typeTransaction": "pagou a", "comentarios": 2, "likes": 5, "toMe": false, "value": "R\$ 50,00" },
 ];
 
 Widget _listActivities(){
@@ -255,7 +260,7 @@ Widget _cardItem(activity, context){
               Container(
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.chat, color: Colors.grey,),
+                    Icon(Icons.chat_bubble_outline, color: Colors.grey,),
                     Padding(
                       padding: const EdgeInsets.only(left: 3, right: 8),
                       child: Text(
@@ -287,8 +292,8 @@ Widget _cardItem(activity, context){
 }
 
 List users = [
-  {"foto": "alfredo", "user": "Cartão de transporte"},
-  {"foto": "diane", "user": "Máquinas Cielo"},
+  {"foto": "transporte", "user": "Cartão de transporte"},
+  {"foto": "cielo", "user": "Máquinas Cielo"},
   {"foto": "alfredo", "user": "@alfredorose"},
   {"foto": "diane", "user": "@dianekuhn"},
   {"foto": "alfredo", "user": "Cartão de transporte"},
